@@ -1,0 +1,21 @@
+spring:
+  profiles:
+    active: prod
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+spring-doc:
+  api-docs:
+    enabled: true
+    path: /rest-api-docs
+  swagger-ui:
+    path: /swagger-ui
+
+app:
+  title: Minuscule API
+  description: Minuscule API documentation for minuscule url-shortener web application"
+  version: 1.0
+  rest-api-doc-path: ${spring-doc.api-docs.path}
+  swagger-path: ${spring-doc.swagger-ui.path}
+  not-found-url: https://minu.uno/404
