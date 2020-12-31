@@ -41,17 +41,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // Set permissions on endpoints
 
-        http.csrf().disable().authorizeRequests()
+       http= http.cors().and().csrf().disable();
+        // Set session management to stateless
+        http = http
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and();
+
+        // Set unauthorized requests exception handler
+        http = http
+                .exceptionHandling()
+                .authenticationEntryPoint(
+                        (request, response, ex) -> response.sendError(
+                                HttpServletResponse.SC_UNAUTHORIZED,
+                                ex.getMessage()
+                        )
+                )
+                .and();
+
+        http.authorizeRequests()
                 .antMatchers(format("%s/**", applicationProperties.getRestApiDocPath())).permitAll()
                 .antMatchers(format("%s/**", applicationProperties.getSwaggerPath())).permitAll()
                 .antMatchers("/u/**").permitAll()
-                .antMatchers("/a/url").fullyAuthenticated()
-                .and().exceptionHandling().authenticationEntryPoint(
-                (request, response, ex) -> {
-                    log.error("Unauthorized request - {}", ex.getMessage());
-                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
-                }
-        ).and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .antMatchers("/a/url").fullyAuthenticated();
         // Add JWT token filter
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
