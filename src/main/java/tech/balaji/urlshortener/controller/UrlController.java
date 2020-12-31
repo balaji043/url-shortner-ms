@@ -21,6 +21,7 @@ import static org.springframework.http.ResponseEntity.status;
 @Tag(name = "URL")
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class UrlController {
 
     private final UrlService urlService;
