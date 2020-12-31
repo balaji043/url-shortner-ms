@@ -47,6 +47,7 @@ public class UserAuthController {
 
     @PostMapping("/u/login")
     public ResponseEntity<ApiSuccessResponse<UserDto>> login(@RequestBody @Valid AuthRequest authRequest) {
+        log.info("Inside controller login  method");
         try {
             Authentication authenticate = authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword()));
