@@ -4,6 +4,7 @@ package tech.balaji.urlshortener.config;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
@@ -62,8 +63,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(format("%s/**", applicationProperties.getRestApiDocPath())).permitAll()
                 .antMatchers(format("%s/**", applicationProperties.getSwaggerPath())).permitAll()
-                .antMatchers("/u/**").permitAll()
-                .antMatchers("/a/url").fullyAuthenticated();
+                .antMatchers(HttpMethod.GET,"/u/").permitAll()
+                .antMatchers(HttpMethod.POST,"/u/sign-up").permitAll()
+                .antMatchers(HttpMethod.POST,"/u/login").permitAll()
+                .antMatchers(HttpMethod.GET,"/a/url").authenticated()
+                .antMatchers(HttpMethod.POST,"/a/url").authenticated();
         // Add JWT token filter
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
