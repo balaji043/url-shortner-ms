@@ -19,3 +19,4 @@ app:
   rest-api-doc-path: ${spring-doc.api-docs.path}
   swagger-path: ${spring-doc.swagger-ui.path}
   not-found-url: https://minu.uno/404
+  expiration-time: 9000000

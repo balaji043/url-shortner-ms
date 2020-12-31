@@ -19,5 +19,10 @@ public class MessageConstants {
     public static final String EMAIL_ID_EXISTS = "Email ID exists";
     public static final String UNAUTHENTICATED_USER = "Unauthenticated User";
 
+
+    public static final String TOKEN_PREFIX = "Bearer ";
+    public static final String SIGN_UP_URL = "/u/sign-up";
+    public static final String LOGIN_URL = "/u/login";
+
     public static final  Supplier<AccessDeniedException> throwAccessDeniedException = () -> new AccessDeniedException(UNAUTHENTICATED_USER);
 }
