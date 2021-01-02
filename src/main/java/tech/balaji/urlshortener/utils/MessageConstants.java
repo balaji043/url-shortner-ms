@@ -23,6 +23,7 @@ public class MessageConstants {
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String SIGN_UP_URL = "/u/sign-up";
     public static final String LOGIN_URL = "/u/login";
+    public static final String REDIRECT_URL = "/u/**";
 
     public static final  Supplier<AccessDeniedException> throwAccessDeniedException = () -> new AccessDeniedException(UNAUTHENTICATED_USER);
 }

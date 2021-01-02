@@ -20,8 +20,7 @@ import tech.balaji.urlshortener.properties.ApplicationProperties;
 import tech.balaji.urlshortener.services.implementation.UserServiceImpl;
 
 import static java.lang.String.format;
-import static tech.balaji.urlshortener.utils.MessageConstants.LOGIN_URL;
-import static tech.balaji.urlshortener.utils.MessageConstants.SIGN_UP_URL;
+import static tech.balaji.urlshortener.utils.MessageConstants.*;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -41,13 +40,16 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL)
                 .permitAll()
-                .antMatchers(HttpMethod.GET, LOGIN_URL).permitAll()
+                .antMatchers(HttpMethod.GET, LOGIN_URL)
+                .permitAll()
+                .antMatchers(HttpMethod.GET, REDIRECT_URL)
+                .permitAll()
                 .antMatchers(HttpMethod.GET, "/a/*")
                 .authenticated()
                 .anyRequest()
                 .authenticated()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager(),applicationProperties
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), applicationProperties
                 ))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager(), applicationProperties))
                 // this disables session creation on Spring Security
